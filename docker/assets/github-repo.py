@@ -4,7 +4,7 @@ GitHub Repo script
 """
 import argparse
 import os
-import sys
+import time
 import yaml
 from github import Github, Auth
 
@@ -94,6 +94,7 @@ class GitLab:
         # If no repo found, create one
         if (repo is None and self.gh_c_repo) and not self.dry_run:
             repo = self.create_repo(org)
+            time.sleep(10)
         else:
             if self.dry_run:
                 print("\tRepo create skipped: dry-run")
