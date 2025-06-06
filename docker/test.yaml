@@ -1,0 +1,23 @@
+schemaVersion: "2.0.0"
+
+metadataTest:
+  labels:
+    - key: "layer"
+      value: "1"
+    - key: "from"
+      value: "gitlab-registry-internal.spirit-dev.net/infrastructure/docker/alpine"
+    - key: "spiritdev_official"
+      value: "yes"
+    - key: "maintainer"
+      value: "bordat.jean@gmail.com"
+  # cmd: ["/bin/sh"]
+
+commandTests:
+  - name: "alpine version"
+    command: "cat"
+    args: ["/etc/alpine-release"]
+    expectedOutput: ["3.*.*"]
+  - name: "python version"
+    command: "python"
+    args: ["--version"]
+    expectedOutput: ["Python [0-9.+]+.*"]
