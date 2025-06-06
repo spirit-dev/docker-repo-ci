@@ -136,6 +136,7 @@ class GitLab:
         repo = org.create_repo(
             name=self.github_repo_name,
             description=self.github_repo_description,
+            auto_init=True
         )
         print("\t\ty")
         return repo
