@@ -1,0 +1,11 @@
+.idea/
+.editorconfig
+.env
+.envrc
+.gitlab-ci.yml
+.gitignore
+Dockerfile
+
+**/.vscode/
+**/.git/
+**/dist/

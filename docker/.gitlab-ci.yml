@@ -1,0 +1,24 @@
+include:
+  - project: templates/gitlab/container-ci
+    ref: main
+    file: container-ci-kaniko.yml
+
+.container-building-variables:
+  variables: &container-building-variables
+    ALPINE_VERSION: "3.18"
+    CONTAINER_BUILD_ARGS: "--build-arg alpine_version=${ALPINE_VERSION}"
+
+# BUILD
+
+build-repo-ci:
+  extends: .container-build
+  variables:
+    <<: *container-building-variables
+
+# PUBLISH
+
+publish-repo-ci:
+  extends: .container-publish
+  variables:
+    <<: *container-building-variables
+    ADDITIONAL_DESTINATIONS: "latest"
