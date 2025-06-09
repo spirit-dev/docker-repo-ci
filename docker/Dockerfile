@@ -1,7 +1,7 @@
 ARG alpine_version
 
-# FROM gitlab-registry-internal.spirit-dev.net/infrastructure/docker/alpine:${alpine_version}
-FROM alpine
+FROM gitlab-registry-internal.spirit-dev.net/infrastructure/docker/alpine:${alpine_version}
+# FROM alpine
 
 ARG alpine_version
 
@@ -11,11 +11,14 @@ LABEL alpine_version="${alpine_version}" \
     from="gitlab-registry-internal.spirit-dev.net/infrastructure/docker/alpine" \
     maintainer="bordat.jean@gmail.com"
 
+COPY docker/assets/requirements.txt /scripts/requirements.txt
+
 RUN apk add --no-cache bash python3 py-pip git colordiff && \
-    pip install pyyaml git-filter-repo detect-secrets python-gitlab PyGithub --break-system-packages
+    pip install -r /scripts/requirements.txt --break-system-packages
 
 ENV FILTER_BRANCH_SQUELCH_WARNING=1
 
 COPY docker/assets/clean_repo.py /scripts/clean_repo.py
 COPY docker/assets/github-repo.py /scripts/github-repo.py
 COPY docker/assets/gitlab-repo.py /scripts/gitlab-repo.py
+COPY docker/assets/markdown.py /scripts/markdown.py
