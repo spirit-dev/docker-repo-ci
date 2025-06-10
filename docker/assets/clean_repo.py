@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+
 """
 Clean Repo script
 """
+
+# pylint: disable=line-too-long
+
 import argparse
 import subprocess
 import os
@@ -90,11 +94,18 @@ class RepositoryCleaner:
         subcommand = f"'git rm -rf --cached --ignore-unmatch {loc}'"
         with open("{}/{}".format(self.reports_path, self.reports_file1), "a", encoding="utf-8") as fout:  # noqa: E501
             # don't use pipe or it will deadlock when the buffer fills up
-            p = subprocess.Popen(' '.join(['git', 'filter-branch', '-f',
-                                            '--index-filter', subcommand,
-                                            '--tag-name-filter', 'cat', '--',  # noqa: E501
-                                            '--all']),
-                                    stdout=fout, stderr=fout, shell=True)
+            p = subprocess.Popen(' '.join(
+                [
+                    'git',
+                    'filter-branch',
+                    '-f',
+                    '--index-filter',
+                    subcommand,
+                    '--tag-name-filter',
+                    'cat', '--',
+                    '--all'
+                ]
+            ), stdout=fout, stderr=fout, shell=True)
             # p = subprocess.Popen(' '.join(['git', 'filter-branch', '-f',
             #                                '--index-filter', subcommand,
             #                                'HEAD']),

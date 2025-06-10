@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
+
 """
-GitHub Repo script
+GitHub Repo creation
 """
+
+# pylint: disable=line-too-long
+
 import argparse
 import os
 import time
@@ -12,7 +16,7 @@ from github import Github, Auth
 class GitLab:
     """ Entry class """
 
-    def __init__(self, cfg_f, repo_path, dr, gh_user, gh_pass, gh_org, gh_c_repo):
+    def __init__(self, cfg_f, repo_path, dr, gh_user, gh_pass, gh_org, gh_c_repo):  # noqa: E501
         # Local vars
         self.config_file = cfg_f
         self.repo_path = repo_path
