@@ -115,7 +115,7 @@ class GitLab:
             dismiss_stale_reviews=True,
             require_code_owner_reviews=True,
             required_approving_review_count=1,
-            allow_force_pushes=False,
+            allow_force_pushes=True,
             allow_deletions=False,
             block_creations=False,
             users_bypass_pull_request_allowances=['jbordat-jb'],

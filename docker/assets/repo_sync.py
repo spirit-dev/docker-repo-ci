@@ -150,7 +150,7 @@ class GitLab:
         # git push origin master
         print('\tpush')
         subprocess.Popen(
-            ["git", "push", "--force", "origin_gl", "HEAD:refs/heads/main"])
+            ["git", "push", "--force", "origin_gl", "HEAD:refs/heads/os.environ['CI_COMMIT_BRANCH']"])  # noqa E501
         time.sleep(5)
 
 
