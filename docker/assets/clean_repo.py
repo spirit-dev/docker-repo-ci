@@ -23,6 +23,10 @@ class RepositoryCleaner:
         self.reports_file1 = "git-filter-branch.txt"
         self.reports_file2 = "git-filter-repo.txt"
 
+        # Change execution location
+        os.chdir(self.repo_path)
+        self.pwd = os.getcwd()
+
     def exec(self):
         """ main function """
 
@@ -34,20 +38,17 @@ class RepositoryCleaner:
         repo_local_name = config['repo_local_name']
         exclusion_files = config['exclusion_files']
 
-        # Change execution location
-        os.chdir(self.repo_path)
-
         # Summary
         print('---------------------------------------------------')
         print('Cleaning up repo: '+repo_local_name)
-        print('Repo located:     '+self.repo_path)
+        print('Repo located:     '+self.pwd)
         print('Config file:      '+self.config_file)
         print('')
         print('Running from:     '+os.path.abspath(__file__))
         print('---------------------------------------------------')
 
         # Set path safe
-        self.safe_directory(self.repo_path)
+        self.safe_directory(self.pwd)
 
         # Create reports dir if not exists
         if not os.path.exists(self.reports_path):
