@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
 """
-Clean Repo script
+Markdown generation script script
 """
+
 import argparse
 import os
 from jinja2 import Environment, FileSystemLoader
@@ -53,6 +55,9 @@ class MdBuilder:
         self.template = env.get_template(f'{self.intf}')
 
     def generate_markdown(self):
+        """
+        Function to generate the markdown file
+        """
 
         # Render the template with the appropriate context
         context = {'repo_type': self.rtype}

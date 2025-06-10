@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+
 """
-Clean Repo script
+Gitlab repo creation
 """
+
+# pylint: disable=line-too-long
+
 import argparse
 import os
-from urllib.parse import urlparse
 import yaml
 import gitlab
 
@@ -12,7 +15,7 @@ import gitlab
 class GitLab:
     """ Entry class """
 
-    def __init__(self, cfg_f, repo_path, dr, gl_srv_url, gl_srv_tken, gl_group, gl_c_repo, gl_c_mirr, gh_user, gh_pass, gh_org):
+    def __init__(self, cfg_f, repo_path, dr, gl_srv_url, gl_srv_tken, gl_group, gl_c_repo, gl_c_mirr, gh_user, gh_pass, gh_org):  # noqa: E501
         # Local vars
         self.config_file = cfg_f
         self.repo_path = repo_path
@@ -43,10 +46,11 @@ class GitLab:
         self.github_repo_name = config['github_repo_name']
         # Github URLs
         domain = "github.com"
-        self.gh_r_url_final = f"https://{gh_user}:{gh_pass}@{domain}/{org_name}/{self.github_repo_name}.git"
-        self.gh_r_url_mask = f"https://*****:*****@{domain}/{org_name}/{self.github_repo_name}.git"
+        self.gh_r_url_final = f"https://{gh_user}:{gh_pass}@{domain}/{org_name}/{self.github_repo_name}.git"  # noqa: E501
+        self.gh_r_url_mask = f"https://*****:*****@{domain}/{org_name}/{self.github_repo_name}.git"  # noqa: E501
 
-        # private token or personal token authentication (self-hosted GitLab instance)
+        # private token or personal token authentication
+        # (self-hosted GitLab instance)
         self.gl = gitlab.Gitlab(
             self.ci_server_url,
             private_token=server_token,
@@ -128,7 +132,7 @@ class GitLab:
             mirror = self.get_mirror(repo)
         else:
             mirror = None
-        if ((repo is not None and mirror is None) and self.gl_c_mirr) and not self.dry_run:
+        if ((repo is not None and mirror is None) and self.gl_c_mirr) and not self.dry_run:  # noqa: E501
             mirror = self.create_mirror(repo)
         else:
             if self.dry_run:
