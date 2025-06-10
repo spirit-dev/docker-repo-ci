@@ -1,7 +1,7 @@
 ARG alpine_version
 
-FROM gitlab-registry-internal.spirit-dev.net/infrastructure/docker/alpine:${alpine_version}
-# FROM alpine
+# FROM gitlab-registry-internal.spirit-dev.net/infrastructure/docker/alpine:${alpine_version}
+FROM alpine
 
 ARG alpine_version
 

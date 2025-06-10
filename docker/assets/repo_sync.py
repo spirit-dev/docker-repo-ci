@@ -43,6 +43,7 @@ class GitLab:
 
         # Change execution location
         os.chdir(self.repo_path)
+        self.pwd = os.getcwd()
 
     def set_var_conf(self, var, key, config):
         """
@@ -86,7 +87,7 @@ class GitLab:
         print('GitLab group:   '+self.gitlab_group)
         print('Git url:        '+self.gl_url_mask)
         print('')
-        print('Repo located:   '+self.repo_path)
+        print('Repo located:   '+self.pwd)
         print('Config file:    '+self.config_file)
         print('Running from:   '+os.path.abspath(__file__))
         print('')
@@ -96,26 +97,30 @@ class GitLab:
         print('Repository:    '+self.repo_local_name)
 
         # Set path safe
+        # git config --global --add safe.directory $(pwd)
         subprocess.Popen(['git', 'config',
                           '--global', '--add',
-                          'safe.directory', self.repo_path])
+                          'safe.directory', self.pwd])
 
-        # Git status
+        # git status
         subprocess.Popen(['git', 'status'])
 
         # Set user
+        # git config user.email $GL_USER_MAIL
         subprocess.Popen([
             'git', 'config', 'user.email',
             self.gitlab_user_mail
         ])
+        # git config user.email $GL_USER_NAME
         subprocess.Popen([
             'git', 'config', 'user.name',
             self.gitlab_user_name
         ])
 
         # Change remote
+        # git remote set-url origin self.gl_url
         subprocess.Popen(['git', 'remote',
-                          'set-url', 'origin',
+                          'add', 'origin_gl',
                           self.gl_url])
 
         # GIt commit
@@ -123,7 +128,7 @@ class GitLab:
         subprocess.Popen(['git', 'commit', '-m', 'synced by ci bot'])
 
         # Git push
-        subprocess.Popen(["git", "push", "origin", "HEAD:main"])
+        subprocess.Popen(["git", "push", "origin_gl", "HEAD:main"])
 
 
 if __name__ == '__main__':
