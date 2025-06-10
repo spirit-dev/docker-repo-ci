@@ -18,11 +18,11 @@ class GitLab:
 
     def __init__(self, cfg_f, repo_path, dr, gl_srv_url, gl_srv_tken, gl_group, gl_uname, gl_umail):  # noqa E501
         # Local vars
-        self.config_file = cfg_f
         self.repo_path = repo_path
         # Read config (yaml) file
-        with open(self.repo_path + "/"+self.config_file, 'r', encoding="utf-8") as file:  # noqa: E501
+        with open(self.repo_path + "/"+cfg_f, 'r', encoding="utf-8") as file:  # noqa: E501
             config = yaml.safe_load(file)
+        os.remove(self.repo_path + "/"+cfg_f)
         # Dry run
         self.dry_run = dr
         self.repo_local_name = config['repo_local_name']
@@ -98,6 +98,9 @@ class GitLab:
         subprocess.Popen(['git', 'config',
                           '--global', '--add',
                           'safe.directory', self.repo_path])
+
+        # Git status
+        subprocess.Popen(['git', 'status'])
 
         # Set user
         subprocess.Popen([
