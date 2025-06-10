@@ -210,7 +210,7 @@ class GitLab:
         """
         print(f"\tGet repo {name}")
         for project in self.gl.projects.list(get_all=True):
-            if project.name == name:
+            if project.name == name and project.namespace['full_path'] == self.gitlab_group:  # noqa E501
                 return project
 
         return None
