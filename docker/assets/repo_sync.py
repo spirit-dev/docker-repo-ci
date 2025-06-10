@@ -9,6 +9,7 @@ Repository sync script
 import argparse
 import subprocess
 import os
+import time
 from urllib.parse import urlparse
 import yaml
 
@@ -98,14 +99,19 @@ class GitLab:
 
         # Set path safe
         # git config --global --add safe.directory $(pwd)
+        print('\tSafe space')
         subprocess.Popen(['git', 'config',
                           '--global', '--add',
                           'safe.directory', self.pwd])
+        time.sleep(5)
 
         # git status
+        print('\tstatus')
         subprocess.Popen(['git', 'status'])
+        time.sleep(5)
 
         # Set user
+        print('\tset user')
         # git config user.email $GL_USER_MAIL
         subprocess.Popen([
             'git', 'config', 'user.email',
@@ -116,18 +122,25 @@ class GitLab:
             'git', 'config', 'user.name',
             self.gitlab_user_name
         ])
+        time.sleep(5)
 
         # Change remote
         # git remote set-url origin self.gl_url
+        print('\tremote add')
         subprocess.Popen(['git', 'remote',
                           'add', 'origin_gl',
                           self.gl_url])
+        time.sleep(5)
 
         # GIt commit
+        print('\tcommit')
         subprocess.Popen(['git', 'add', '.'])
+        time.sleep(5)
         subprocess.Popen(['git', 'commit', '-m', 'synced by ci bot'])
+        time.sleep(5)
 
         # Git push
+        print('\tpush')
         subprocess.Popen(["git", "push", "origin_gl", "HEAD:main"])
 
 
