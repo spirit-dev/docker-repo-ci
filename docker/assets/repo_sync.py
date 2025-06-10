@@ -124,14 +124,6 @@ class GitLab:
         ])
         time.sleep(5)
 
-        # Change remote
-        # git remote set-url origin self.gl_url
-        print('\tremote add')
-        subprocess.Popen(['git', 'remote',
-                          'add', 'origin_gl',
-                          self.gl_url])
-        time.sleep(5)
-
         # GIt commit
         print('\tcommit')
         subprocess.Popen(['git', 'add', '.'])
@@ -141,7 +133,22 @@ class GitLab:
 
         # Git push
         print('\tpush')
-        subprocess.Popen(["git", "push", "origin_gl", "HEAD:main"])
+        subprocess.Popen(["git", "fetch", "--unshallow", self.gl_url])
+        time.sleep(5)
+        subprocess.Popen(["git", "remote", "remove", "origin"])
+        time.sleep(5)
+        # git init
+        subprocess.Popen(["git", "init"])
+        time.sleep(5)
+        # Change remote
+        print('\tremote add')
+        subprocess.Popen(['git', 'remote',
+                          'add', 'origin_gl',
+                          self.gl_url])
+        time.sleep(5)
+        # git push origin master
+        subprocess.Popen(
+            ["git", "push", "--force", "origin_gl", "HEAD:refs/heads/main"])
 
 
 if __name__ == '__main__':
