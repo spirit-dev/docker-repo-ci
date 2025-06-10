@@ -41,6 +41,7 @@ class GitLab:
         o = urlparse(self.ci_server_url)
         self.gl_url = f"{o.scheme}://oauth2:{server_token}@{o.netloc}/{self.gitlab_group}/{self.gitlab_sync_repo_name}.git"  # noqa E501
         self.gl_url_mask = f"{o.scheme}://oauth2:******@{o.netloc}/{self.gitlab_group}/{self.gitlab_sync_repo_name}.git"  # noqa E501
+        self.gl_ori_url = f"{o.scheme}://oauth2:{server_token}@{o.netloc}/{os.environ['CI_PROJECT_PATH']}"  # noqa E501
 
         # Change execution location
         os.chdir(self.repo_path)
@@ -117,7 +118,7 @@ class GitLab:
             'git', 'config', 'user.email',
             self.gitlab_user_mail
         ])
-        # git config user.email $GL_USER_NAME
+        # git config user.name $GL_USER_NAME
         subprocess.Popen([
             'git', 'config', 'user.name',
             self.gitlab_user_name
@@ -126,16 +127,16 @@ class GitLab:
 
         # GIt commit
         print('\tcommit')
+        # git add .
         subprocess.Popen(['git', 'add', '.'])
         time.sleep(5)
+        # git commit -m 'synced by ci bot'
         subprocess.Popen(['git', 'commit', '-m', 'synced by ci bot'])
         time.sleep(5)
 
-        # Git push
-        print('\tpush')
-        subprocess.Popen(["git", "fetch", "--unshallow", self.gl_url])
-        time.sleep(5)
-        subprocess.Popen(["git", "remote", "remove", "origin"])
+        # Git fetch
+        # git fetch --unshallow https://oauth2:$CI_SERVER_TOKEN@$CI_SERVER_HOST/$CI_PROJECT_PATH # noqa E501
+        subprocess.Popen(["git", "fetch", "--unshallow", self.gl_ori_url])
         time.sleep(5)
         # git init
         subprocess.Popen(["git", "init"])
@@ -147,8 +148,10 @@ class GitLab:
                           self.gl_url])
         time.sleep(5)
         # git push origin master
+        print('\tpush')
         subprocess.Popen(
             ["git", "push", "--force", "origin_gl", "HEAD:refs/heads/main"])
+        time.sleep(5)
 
 
 if __name__ == '__main__':
