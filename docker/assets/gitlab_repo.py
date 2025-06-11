@@ -142,6 +142,66 @@ class GitLab:
             if mirror is not None:
                 print("\tMirror already created")
 
+        # Update branch protection
+        print(f"Branch protec: {self.repo_local_name}")
+        p_branch = None
+        if repo is not None:
+            p_branch = self.get_protected_branch(repo)
+        if (repo is not None and p_branch is None) and not self.dry_run:  # noqa: E501
+            p_branch = self.create_protected_branch(repo)
+        else:
+            if self.dry_run and p_branch is None:
+                print('\tProtected branch create skipped: dry-run')
+            if p_branch is not None:
+                print("\tProtected branch already created")
+        if (repo is not None and p_branch is not None) and not self.dry_run:  # noqa: E501
+            p_branch.allow_force_push = True
+            p_branch.save()
+            print(
+                f"\tProtected branch {repo.name}({repo.default_branch}) updated")  # noqa: E501
+        else:
+            if self.dry_run:
+                print('\tProtected branch update skipped: dry-run')
+
+    def create_protected_branch(self, repo):
+        """
+        Creates and returns a protected branch (repo default branch)
+
+        Args:
+            repo (object): repository
+
+        Returns:
+            object: protected branch
+        """
+
+        print(f"\tCreate protected branch {repo.default_branch} in repo {repo.name}")  # noqa: E501
+        p_branch = repo.protectedbranches.create({
+            'name': repo.default_branch,
+            'merge_access_level': gitlab.const.AccessLevel.MAINTAINER,
+            'push_access_level': gitlab.const.AccessLevel.MAINTAINER,
+            "allow_force_push": True,
+        })
+        print("\t\ty")
+        return p_branch
+
+    def get_protected_branch(self, repo):
+        """
+        Get and returns a protected branch object based on default repo branch
+
+        Args:
+            repo (object): repository
+
+        Returns:
+            object: protected branch
+        """
+
+        print(f"\tGet protected branch {repo.name}({repo.default_branch})")
+
+        try:
+            return repo.protectedbranches.get(repo.default_branch)
+        except Exception:
+            return None
+
     def get_mirror(self, repo):
         """
         find and returns mirror based on its target
