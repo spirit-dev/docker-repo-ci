@@ -1,6 +1,6 @@
 .ONESHELL:
 
-ALPINE_VERSION:=3.18
+ALPINE_VERSION:=latest
 
 CONTAINER_DEFINITION_FILE=docker/Dockerfile
 CONTAINER_BUILD_ARGS:="--build-arg alpine_version=${ALPINE_VERSION}"
@@ -22,3 +22,19 @@ build: ## docker build
 
 run: build ## jump in the container
 	@docker run -it --rm ${CONTAINER_IMAGE_NAME}:${CONTAINER_IMAGE_TAG} bash
+
+##@ docker compose
+compose-build: ## docker compose build
+	@cd ./docker && docker compose build "${CONTAINER_BUILD_ARGS}" && cd ../..
+
+compose-run: compose-build ## Run the container
+
+	@cd ./docker
+	@docker compose up
+	@cd ..
+
+compose-exec: compose-build ## Jump in the container
+
+	@cd ./docker
+	@docker compose run --entrypoint sh ${CONTAINER_IMAGE_NAME}
+	@cd ..

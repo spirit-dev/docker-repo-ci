@@ -1,10 +1,20 @@
-# CHANGEME
+# repo-ci
 
 {% if repo_type == 'gitlab' -%}
 {% include '.gitlab/badges.md' %}
 {%- endif %}
 
 <!--TOC-->
+
+- [Documentation](#documentation)
+  - [Os](#os)
+- [TEST](#test)
+  - [Prerequisite](#prerequisite)
+  - [Linux](#linux)
+  - [MacOS](#macos)
+  - [Others](#others)
+  - [Usage](#usage)
+- [Resource](#resource)
 
 <!--TOC-->
 
@@ -32,9 +42,9 @@ This repository is dedicated to oficial images used in our differents projects /
 ### Os
 
 {% if repo_type == 'gitlab' -%}
-- [**Alpine**](https://gitlab-internal.spirit-dev.net/infrastructure/docker/CHANGEME)
+- [**Alpine**](https://gitlab-internal.spirit-dev.net/infrastructure/docker/repo-ci)
 {%- else -%}
-- [**Alpine**](https://github.com/spirit-dev/CHANGEME_GH)
+- [**Alpine**](https://github.com/spirit-dev/docker-repo-ci)
 {%- endif %}
 
 ## TEST
