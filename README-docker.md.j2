@@ -1,8 +1,16 @@
-# DockerFiles
+# CHANGEME
+
+{% if repo_type == 'gitlab' -%}
+{% include '.gitlab/badges.md' %}
+{%- endif %}
+
+<!--TOC-->
+
+<!--TOC-->
 
 This repository is dedicated to oficial images used in our differents projects / microservices
 
-**Technically speaking**
+**Technically speaking** <!-- markdownlint-disable MD036 -->
 
 - CICD in place to ease build and push of images
 - Testing solution for images
@@ -10,7 +18,6 @@ This repository is dedicated to oficial images used in our differents projects /
 - Harmonization of naming convention
 
 **Organization view**
-​
 
 - Easier security patches for the entire organization
 - storage possibility for non-service related images
@@ -24,9 +31,13 @@ This repository is dedicated to oficial images used in our differents projects /
 
 ### Os
 
-- [**Alpine**](images/os/alpine/Readme.md)
+{% if repo_type == 'gitlab' -%}
+- [**Alpine**](https://gitlab-internal.spirit-dev.net/infrastructure/docker/CHANGEME)
+{%- else -%}
+- [**Alpine**](https://github.com/spirit-dev/CHANGEME_GH)
+{%- endif %}
 
-## Test
+## TEST
 
 ### Prerequisite
 

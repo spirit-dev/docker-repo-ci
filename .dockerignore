@@ -4,8 +4,10 @@
 .envrc
 .gitlab-ci.yml
 .gitignore
+**/tsconfig.tsbuildinfo
 Dockerfile
 
 **/.vscode/
 **/.git/
 **/dist/
+**/node_modules/
