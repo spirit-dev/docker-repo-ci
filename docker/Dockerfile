@@ -1,7 +1,7 @@
 ARG alpine_version
 
-FROM gitlab-registry-internal.spirit-dev.net/infrastructure/docker/alpine:${alpine_version}
-# FROM alpine:3.21
+# FROM gitlab-registry-internal.spirit-dev.net/infrastructure/docker/alpine:${alpine_version}
+FROM alpine:3.21
 
 ARG alpine_version
 
@@ -13,7 +13,9 @@ LABEL alpine_version="${alpine_version}" \
 
 COPY docker/assets/requirements.txt /scripts/requirements.txt
 
-RUN apk add --no-cache bash=5.2.37-r0 python3=3.12.11-r0 py3-pip=24.3.1-r0 git=2.47.2-r0 colordiff=1.0.21-r0 && \
+RUN apk add --no-cache bash=5.2.37-r0 python3=3.12.11-r0 git=2.47.2-r0 colordiff=1.0.21-r0
+# hadolint ignore=DL3018
+RUN apk add --no-cache py-pip && \
     pip install --no-cache-dir -r /scripts/requirements.txt --break-system-packages
 
 ENV FILTER_BRANCH_SQUELCH_WARNING=1
