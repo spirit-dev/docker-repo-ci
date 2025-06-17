@@ -1,2 +1,4 @@
 ignored:
   - DL4006
+  # - DL3048 # Invalid label key.
+  # - DL3018 # Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`

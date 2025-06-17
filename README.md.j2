@@ -1,7 +1,8 @@
 # repo-ci
 
-[![GitLab Sync](https://img.shields.io/badge/gitlab_sync-repo_ci-blue?style=for-the-badge&logo=gitlab)](https://gitlab-internal.spirit-dev.net/github-mirror/docker-repo-ci) <!-- markdownlint-disable MD041 -->
-[![GitHub Mirror](https://img.shields.io/badge/github_mirror-repo_ci-blue?style=for-the-badge&logo=github)](https://github.com/spirit-dev/docker-repo-ci)
+{% if repo_type == 'gitlab' -%}
+{% include '.gitlab/badges.md' %}
+{%- endif %}
 
 <!--TOC-->
 
@@ -40,7 +41,11 @@ This repository is dedicated to oficial images used in our differents projects /
 
 ### Os
 
+{% if repo_type == 'gitlab' -%}
 - [**Alpine**](https://gitlab-internal.spirit-dev.net/infrastructure/docker/repo-ci)
+{%- else -%}
+- [**Alpine**](https://github.com/spirit-dev/docker-repo-ci)
+{%- endif %}
 
 ## TEST
 
