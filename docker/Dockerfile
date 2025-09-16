@@ -35,3 +35,4 @@ COPY docker/assets/github_repo.py /scripts/github_repo.py
 COPY docker/assets/gitlab_repo.py /scripts/gitlab_repo.py
 COPY docker/assets/markdown.py /scripts/markdown.py
 COPY docker/assets/repo_sync.py /scripts/repo_sync.py
+COPY docker/assets/mr_comment.py /scripts/mr_comment.py
