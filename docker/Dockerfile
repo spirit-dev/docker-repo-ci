@@ -18,7 +18,7 @@ RUN apk add --no-cache bash=5.2.37-r0 python3=3.12.11-r0 py-pip=24.3.1-r0 git=2.
 
 
 # Install Helm
-ARG HELM_VERSION=3.16.2
+ARG HELM_VERSION=3.18.4
 RUN curl -fsSL https://get.helm.sh/helm-v${HELM_VERSION}-linux-amd64.tar.gz | \
     tar -xzC /tmp && \
     mv /tmp/linux-amd64/helm /usr/local/bin/helm && \
